@@ -9,7 +9,8 @@ urlpatterns = [
     path('logout/', auth_views.LoginView.as_view(), name='logout'),
     path('', views.dashboard, name='dashboard'),
     path('password_change/',
-         auth_views.PasswordChangeView.as_view(),
+         views.PasswordChangeCustom.as_view(),
+         #auth_views.PasswordChangeView.as_view(),
          name='password_change'),
     path('password_change/done/',
          auth_views.PasswordChangeDoneView.as_view(),
@@ -25,6 +26,7 @@ urlpatterns = [
     name='password_reset_confirm'),
     path('reset/done/',
     auth_views.PasswordResetCompleteView.as_view(),
-    name='password_reset_complete')
+    name='password_reset_complete'),
+    path('register/', views.register, name='register'),
 
 ]
