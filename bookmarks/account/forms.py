@@ -36,6 +36,7 @@ class CustomUserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'email')
+        labels = {'username': 'Логин'}
 
 
 class UserEditForm(forms.ModelForm):
@@ -45,6 +46,7 @@ class UserEditForm(forms.ModelForm):
 
 
 class ProfileEditForm(forms.ModelForm):
+    date_of_birth = forms.DateField(label='Дата рождения', widget=forms.widgets.SelectDateWidget(years=range(1950,2020)))
     class Meta:
         model = Profile
         fields = ('date_of_birth', 'photo')
