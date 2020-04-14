@@ -6,16 +6,15 @@ from django.contrib.auth.models import User
 
 from .models import Profile
 
+PASSWORD_HELP_TEXT = format_html("""<dl>Ваш пароль не может быть похож на имя пользователя <br>
+          Ваш пароль должен содержать как минимум 8 символов <br>
+          Пароль не должен быть предсказуем <br>
+          Пароль не может состоять из одних цифр</dl>""")
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
-
-
-HELP_TEXT = format_html("""<dl>Ваш пароль не может быть похож на имя пользователя <br>
-          Ваш пароль должен содержать как минимум 8 символов <br>
-          Пароль не должен быть предсказуем <br>
-          Пароль не может состоять из одних цифр</dl>""")
 
 
 class CustomPasswordChange(PasswordChangeForm):
@@ -23,7 +22,7 @@ class CustomPasswordChange(PasswordChangeForm):
         label=_("New password"),
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
         strip=False,
-        help_text=HELP_TEXT)
+        help_text=PASSWORD_HELP_TEXT)
 
 
 class CustomUserRegistrationForm(UserCreationForm):
@@ -31,7 +30,7 @@ class CustomUserRegistrationForm(UserCreationForm):
         label=_("Password"),
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
         strip=False,
-        help_text=HELP_TEXT)
+        help_text=PASSWORD_HELP_TEXT)
 
     class Meta:
         model = User
@@ -46,7 +45,9 @@ class UserEditForm(forms.ModelForm):
 
 
 class ProfileEditForm(forms.ModelForm):
-    date_of_birth = forms.DateField(label='Дата рождения', widget=forms.widgets.SelectDateWidget(years=range(1950,2020)))
+    date_of_birth = forms.DateField(label='Дата рождения',
+                                    widget=forms.widgets.SelectDateWidget(years=range(1950, 2020)))
+
     class Meta:
         model = Profile
         fields = ('date_of_birth', 'photo')
